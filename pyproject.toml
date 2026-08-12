@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "provenance-graphrag"
+version = "0.1.0"
+description = "Build and query provenance-aware knowledge graphs from Markdown and text."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Avi Asthana", email = "aviasthana@gmail.com" }]
+keywords = ["graphrag", "knowledge-graph", "rag", "neo4j", "provenance"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "neo4j>=5.26,<7",
+  "python-dotenv>=1.0,<2",
+  "requests>=2.32,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.11,<1",
+]
+
+[project.scripts]
+provenance-graphrag = "provenance_graphrag.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/aviasthana1/provenance-graphrag"
+Issues = "https://github.com/aviasthana1/provenance-graphrag/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/provenance_graphrag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --strict-config"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+ignore = ["F403", "F405"]
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+warn_unused_ignores = true
